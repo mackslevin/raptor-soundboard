@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>raptor soundboard</title>
+<style>
+  /* Reset */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: monospace;
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+  }
+
+  main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 2px;
+  }
+
+  /* Grid container: nearly edge-to-edge */
+  .grid {
+    display: grid;
+    gap: 6px;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Individual squares: 1:1 aspect ratio */
+  .square {
+    aspect-ratio: 1 / 1;
+    background: #3498db;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    user-select: none;
+  }
+
+  .square:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  /* 2 columns on mobile */
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>raptor soundboard</h1>
+  <div class="grid">
+    <div class="square" data-name="Alpha" data-clip="./clips/c1.mp3">Alpha</div>
+    <div class="square" data-name="Bravo" data-clip="./clips/c2.mp3">Bravo</div>
+    <div class="square" data-name="Charlie" data-clip="./clips/c3.mp3">Charlie</div>
+    <div class="square" data-name="Delta" data-clip="./clips/c4.mp3">Delta</div>
+  </div>
+</main>
+
+<script>
+  document.querySelectorAll('.square').forEach(el => {
+    let audio = new Audio(el.dataset.clip);
+
+    el.addEventListener('click', () => {
+      audio.currentTime = 0;
+      audio.play().catch(error => {
+        console.error('Playback failed:', error);
+      });
+    });
+  });
+</script>
+</body>
+</html>
